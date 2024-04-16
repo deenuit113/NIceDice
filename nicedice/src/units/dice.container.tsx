@@ -1,22 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import DiceUI from './dice.presenter';
 
 export default function DicePage(): JSX.Element {
     const [isRolling, setIsRolling] = useState<boolean>(false);
     const [diceValue, setDiceValue] = useState<number>(0);
-    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
-    const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-    const diceRef = useRef<THREE.Mesh | null>(null);
-    const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false); //@ts-ignore
+    const rendererRef = useRef<THREE.WebGLRenderer | null>(null); //@ts-ignore
+    const diceRef = useRef<THREE.Mesh | null>(null); //@ts-ignore
+    const cameraRef = useRef<THREE.PerspectiveCamera | null>(null); //@ts-ignore
     const sceneRef = useRef<THREE.Scene | null>(null);
 
     useEffect(() => {
+        const container = document.createElement('div');
+        container.id = 'scene-container';
+        document.body.appendChild(container);
+        
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 6;
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth / 2, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        container.appendChild(renderer.domElement);
         scene.background = new THREE.Color(0x99ccff);
 
         const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -41,11 +46,25 @@ export default function DicePage(): JSX.Element {
         renderer.render(scene, camera);
         rollDice();
 
+        window.addEventListener('resize', handleWindowResize);
+
         return () => {
-            document.body.removeChild(renderer.domElement);
+            container.removeChild(renderer.domElement);
             renderer.dispose();
+            window.removeEventListener('resize', handleWindowResize);
         };
     }, []);
+
+    const handleWindowResize = () => {
+        const camera = cameraRef.current;
+        const renderer = rendererRef.current;
+
+        if (camera && renderer) {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth / 2, window.innerHeight);
+        }
+    };
 
     const rollDice = () => {
         if (isRolling || isButtonDisabled) return;
@@ -92,7 +111,7 @@ export default function DicePage(): JSX.Element {
 
         animateRoll();
     };
-
+    //@ts-ignore
     const showTopFace = (dice: THREE.Mesh, camera: THREE.PerspectiveCamera) => {
         const diceFaces = [
             { value: 6, direction: new THREE.Vector3(0, 0, 1), up: new THREE.Vector3(0, 1, 0) },
@@ -120,9 +139,12 @@ export default function DicePage(): JSX.Element {
     };
 
     return (
-        <div>
-            <button onClick={rollDice} disabled={isButtonDisabled}>Roll Dice</button>
-            <div>{diceValue}</div>
-        </div>
+        <>
+            <DiceUI
+                rollDice = {rollDice}
+                isButtonDisabled = {isButtonDisabled}
+                diceValue = {diceValue}
+            />
+        </>
     );
 }
