@@ -20,7 +20,7 @@ export const PlayerWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 3px solid red;
+    border: 3px solid orange;
 `
 
 export const RollButton = styled.button`

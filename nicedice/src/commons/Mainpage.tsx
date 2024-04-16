@@ -1,4 +1,4 @@
-import DicePlayer from "@/units/dice.container";
+import DicePlayer from "@/units/dice/dice.container";
 import * as S from "./Mainpage.styles";
 
 export default function MainPage(): JSX.Element{
