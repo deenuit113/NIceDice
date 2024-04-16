@@ -20,7 +20,7 @@ export default function DicePage(): JSX.Element {
         const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 6;
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth / 2, window.innerHeight);
+        renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
         container.appendChild(renderer.domElement);
         scene.background = new THREE.Color(0x99ccff);
 
@@ -75,15 +75,15 @@ export default function DicePage(): JSX.Element {
         setIsRolling(true);
         setIsButtonDisabled(true);
     
-        const newDiceValues: number[] = [0,0,0,0,0];
+        const newDiceValues: number[] = [0, 0, 0, 0, 0];
     
-        const animateRoll = (index: number) => {
-            const dice = diceRefs.current[index];
+        const duration = 300;
+    
+        for (let i = 0; i < diceRefs.current.length; i++) {
+            const dice = diceRefs.current[i];
             const scene = sceneRef.current;
             const camera = cameraRef.current;
             if (!dice || !scene || !camera) return;
-    
-            const duration = 300;
     
             const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2);
             const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2);
@@ -92,43 +92,37 @@ export default function DicePage(): JSX.Element {
             const startRotation = dice.rotation.clone();
             const endRotation = new THREE.Euler(minRotationX, minRotationY, minRotationZ);
     
+            const startTime = Date.now();
+    
             const animateSingleRoll = () => {
-                const startTime = Date.now();
-                const animate = () => {
-                    const now = Date.now();
-                    const delta = now - startTime;
-                    const t = Math.min(delta / duration, 1);
+                const now = Date.now();
+                const delta = now - startTime;
+                const t = Math.min(delta / duration, 1);
     
-                    dice.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
-                    dice.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
-                    dice.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
+                dice.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
+                dice.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
+                dice.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
     
-                    rendererRef.current?.render(scene, camera);
+                rendererRef.current?.render(scene, camera);
     
-                    if (t < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        const newValue = showTopFace(dice, camera);
-                        newDiceValues.push(newValue);
-                        newDiceValues.shift();
+                if (t < 1) {
+                    requestAnimationFrame(animateSingleRoll);
+                } else {
+                    const newValue = showTopFace(dice, camera);
+                    newDiceValues.push(newValue);
+                    newDiceValues.shift();
     
-                        if (index === diceRefs.current.length - 1) {
-                            console.log(newDiceValues);
-                            setDiceValues(newDiceValues.slice()); // 주사위 값을 갱신합니다.
-                            setIsRolling(false);
-                            setIsButtonDisabled(false);
-                        } else {
-                            animateRoll(index + 1);
-                        }
+                    if (i === diceRefs.current.length - 1) {
+                        console.log(newDiceValues);
+                        setDiceValues(newDiceValues.slice());
+                        setIsRolling(false);
+                        setIsButtonDisabled(false);
                     }
-                };
-                animate();
+                }
             };
     
             animateSingleRoll();
-        };
-    
-        animateRoll(0);
+        }
     };
     //@ts-ignore
     const showTopFace = (dice: THREE.Mesh, camera: THREE.PerspectiveCamera) => {
