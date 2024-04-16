@@ -21,6 +21,14 @@ export const RollButton = styled.button`
     }
 `
 
-export const DiceValue = styled.div`
+export const DiceValueWrapper = styled.div`
+    height: 100px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid blue;
+` 
+export const DiceValue = styled.div<{diceValue: number}>`
     font-size: 50px;
+    color: ${(props)=> (props.diceValue === 1? 'orange': 'blue')};
 `

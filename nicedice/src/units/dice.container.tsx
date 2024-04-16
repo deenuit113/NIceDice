@@ -4,10 +4,10 @@ import DiceUI from './dice.presenter';
 
 export default function DicePage(): JSX.Element {
     const [isRolling, setIsRolling] = useState<boolean>(false);
-    const [diceValue, setDiceValue] = useState<number>(0);
+    const [diceValues, setDiceValues] = useState<number[]>([0, 0, 0, 0, 0]);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false); //@ts-ignore
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null); //@ts-ignore
-    const diceRef = useRef<THREE.Mesh | null>(null); //@ts-ignore
+    const diceRefs = useRef<THREE.Mesh[]>([]); //@ts-ignore
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null); //@ts-ignore
     const sceneRef = useRef<THREE.Scene | null>(null);
 
@@ -17,7 +17,7 @@ export default function DicePage(): JSX.Element {
         document.body.appendChild(container);
         
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 6;
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth / 2, window.innerHeight);
@@ -35,13 +35,17 @@ export default function DicePage(): JSX.Element {
             new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('/6.png') }),
         ];
 
-        const dice = new THREE.Mesh(geometry, material);
-        scene.add(dice);
+        const diceCount = 5;
+        for (let i = 0; i < diceCount; i++) {
+            const dice = new THREE.Mesh(geometry, material);
+            dice.position.x = i * 2 - (diceCount - 1);
+            scene.add(dice);
+            diceRefs.current.push(dice);
+        }
 
         sceneRef.current = scene;
         cameraRef.current = camera;
         rendererRef.current = renderer;
-        diceRef.current = dice;
 
         renderer.render(scene, camera);
         rollDice();
@@ -70,46 +74,61 @@ export default function DicePage(): JSX.Element {
         if (isRolling || isButtonDisabled) return;
         setIsRolling(true);
         setIsButtonDisabled(true);
-
-        const dice = diceRef.current;
-        const renderer = rendererRef.current;
-        const camera = cameraRef.current;
-        const scene = sceneRef.current;
-
-        const duration = 300;
-
-        const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2); // X 축 회전 각도
-        const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2); // Y 축 회전 각도
-        const minRotationZ = Math.floor(Math.random() * 20) * (Math.PI / 2); // Z 축 회전 각도
-
-        const startRotation = dice!.rotation.clone();
-        const endRotation = new THREE.Euler(minRotationX, minRotationY, minRotationZ);
-
-        const animateRoll = () => {
-            const startTime = Date.now();
-            const animate = () => {
-                const now = Date.now();
-                const delta = now - startTime;
-                const t = Math.min(delta / duration, 1);
-
-                dice!.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
-                dice!.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
-                dice!.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
-
-                renderer!.render(scene!, camera!);
-
-                if (t < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    setIsRolling(false);
-                    setIsButtonDisabled(false);
-                    setDiceValue(showTopFace(dice!, camera!));
-                }
+    
+        const newDiceValues: number[] = [0,0,0,0,0];
+    
+        const animateRoll = (index: number) => {
+            const dice = diceRefs.current[index];
+            const scene = sceneRef.current;
+            const camera = cameraRef.current;
+            if (!dice || !scene || !camera) return;
+    
+            const duration = 300;
+    
+            const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2);
+            const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2);
+            const minRotationZ = Math.floor(Math.random() * 20) * (Math.PI / 2);
+    
+            const startRotation = dice.rotation.clone();
+            const endRotation = new THREE.Euler(minRotationX, minRotationY, minRotationZ);
+    
+            const animateSingleRoll = () => {
+                const startTime = Date.now();
+                const animate = () => {
+                    const now = Date.now();
+                    const delta = now - startTime;
+                    const t = Math.min(delta / duration, 1);
+    
+                    dice.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
+                    dice.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
+                    dice.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
+    
+                    rendererRef.current?.render(scene, camera);
+    
+                    if (t < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        const newValue = showTopFace(dice, camera);
+                        newDiceValues.push(newValue);
+                        newDiceValues.shift();
+    
+                        if (index === diceRefs.current.length - 1) {
+                            console.log(newDiceValues);
+                            setDiceValues(newDiceValues.slice()); // 주사위 값을 갱신합니다.
+                            setIsRolling(false);
+                            setIsButtonDisabled(false);
+                        } else {
+                            animateRoll(index + 1);
+                        }
+                    }
+                };
+                animate();
             };
-            animate();
+    
+            animateSingleRoll();
         };
-
-        animateRoll();
+    
+        animateRoll(0);
     };
     //@ts-ignore
     const showTopFace = (dice: THREE.Mesh, camera: THREE.PerspectiveCamera) => {
@@ -143,7 +162,7 @@ export default function DicePage(): JSX.Element {
             <DiceUI
                 rollDice = {rollDice}
                 isButtonDisabled = {isButtonDisabled}
-                diceValue = {diceValue}
+                diceValues = {diceValues}
             />
         </>
     );

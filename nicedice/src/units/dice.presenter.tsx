@@ -1,13 +1,17 @@
 import { DiceUIProps } from "./dice.types";
 import * as S from "./dice.styles";
 
-export default function DiceUI (props: DiceUIProps) {
+export default function DiceUI(props: DiceUIProps) {
     return (
         <>
             <S.Wrapper>
                 <S.RollButton onClick={props.rollDice} disabled={props.isButtonDisabled}>Roll Dice</S.RollButton>
-                <S.DiceValue>{props.diceValue}</S.DiceValue>
+                <S.DiceValueWrapper>
+                    {props.diceValues.map((value, index) => (
+                        <S.DiceValue key={index} diceValue={value}>{value}</S.DiceValue>
+                    ))}
+                </S.DiceValueWrapper>
             </S.Wrapper>
         </>
-    )
+    );
 }
