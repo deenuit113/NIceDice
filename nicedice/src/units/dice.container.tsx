@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import DiceUI from './dice.presenter';
+import { DicePlayerProps } from './dice.types';
 
-export default function DicePage(): JSX.Element {
+export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const [isRolling, setIsRolling] = useState<boolean>(false);
     const [diceValues, setDiceValues] = useState<number[]>([0, 0, 0, 0, 0]);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false); //@ts-ignore
@@ -10,17 +11,18 @@ export default function DicePage(): JSX.Element {
     const diceRefs = useRef<THREE.Mesh[]>([]); //@ts-ignore
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null); //@ts-ignore
     const sceneRef = useRef<THREE.Scene | null>(null);
+    const wrapperName = `wrapper${props.player}`
 
     useEffect(() => {
         const container = document.createElement('div');
         container.id = 'scene-container';
-        document.body.appendChild(container);
+        document.getElementById(wrapperName)?.appendChild(container);
         
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 6;
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+        renderer.setSize(window.innerWidth / 2, window.innerHeight /2);
         container.appendChild(renderer.domElement);
         scene.background = new THREE.Color(0x99ccff);
 
@@ -157,6 +159,7 @@ export default function DicePage(): JSX.Element {
                 rollDice = {rollDice}
                 isButtonDisabled = {isButtonDisabled}
                 diceValues = {diceValues}
+                wrapperName = {wrapperName}
             />
         </>
     );

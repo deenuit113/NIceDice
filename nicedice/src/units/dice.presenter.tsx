@@ -2,9 +2,10 @@ import { DiceUIProps } from "./dice.types";
 import * as S from "./dice.styles";
 
 export default function DiceUI(props: DiceUIProps) {
+    
     return (
         <>
-            <S.Wrapper>
+            <S.Wrapper id = {props.wrapperName}>
                 <S.RollButton onClick={props.rollDice} disabled={props.isButtonDisabled}>Roll Dice</S.RollButton>
                 <S.DiceValueWrapper>
                     {props.diceValues.map((value, index) => (

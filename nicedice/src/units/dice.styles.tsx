@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-    width: 50vw;
-    height: 45vw;
+    width: 100vw;
+    height: 50vw;
     float: right;
     padding: auto;
     border: 3px solid red;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;

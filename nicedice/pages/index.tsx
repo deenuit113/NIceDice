@@ -1,9 +1,9 @@
-import DicePage from "@/units/dice.container";
+import MainPage from "@/commons/Mainpage";
 
 export default function Home(): JSX.Element {
   return (
     <>
-      <DicePage/>
+      <MainPage/>
     </>
   );
 }
