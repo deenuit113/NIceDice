@@ -42,6 +42,7 @@ export const ScoreTitle = styled.td`
 `
 
 export const Score = styled.td`
+    width: 40px;
     text-align: center;
     border: 1px solid gray;
 `

@@ -7,4 +7,5 @@ export interface DiceUIProps {
     isButtonDisabled: boolean;
     diceValues: number[];
     wrapperName: string;
+    player: string;
 }

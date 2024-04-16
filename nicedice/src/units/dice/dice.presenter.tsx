@@ -8,14 +8,16 @@ export default function DiceUI(props: DiceUIProps) {
         <>
             <S.Wrapper id = {props.wrapperName}>
                 <S.PlayerWrapper>
-                    <S.RollButton onClick={props.rollDice} disabled={props.isButtonDisabled}>Roll Dice</S.RollButton>
+                    <S.RollButton onClick={props.rollDice} disabled={props.isButtonDisabled}>{props.player} Roll Dice</S.RollButton>
                     <S.DiceValueWrapper>
                         {props.diceValues.map((value, index) => (
                             <S.DiceValue key={index} diceValue={value}>{value}</S.DiceValue>
                         ))}
                     </S.DiceValueWrapper>
                     <S.PlayerBoardWrapper>
-                        <ScoreBoard/>
+                        <ScoreBoard
+                            diceValues = {props.diceValues}
+                        />
                     </S.PlayerBoardWrapper>
                 </S.PlayerWrapper>
             </S.Wrapper>

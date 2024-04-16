@@ -115,7 +115,6 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
                     newDiceValues.shift();
     
                     if (i === diceRefs.current.length - 1) {
-                        console.log(newDiceValues);
                         setDiceValues(newDiceValues.slice());
                         setIsRolling(false);
                         setIsButtonDisabled(false);
@@ -158,6 +157,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
             <DiceUI
                 rollDice = {rollDice}
                 isButtonDisabled = {isButtonDisabled}
+                player = {props.player}
                 diceValues = {diceValues}
                 wrapperName = {wrapperName}
             />
