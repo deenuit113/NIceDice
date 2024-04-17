@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-    width: 100vw;
-    height: 48vw;
+    width: 100%;
+    height: 100%;
     float: right;
     padding: auto;
     display: flex;
@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 `;
 
 export const PlayerWrapper = styled.div`
-    width: 50%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;

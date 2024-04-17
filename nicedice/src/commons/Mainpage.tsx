@@ -7,8 +7,12 @@ export default function MainPage(): JSX.Element{
 
     return(
         <S.PageWrapper>
-            <DicePlayer player={playerOne}/>
-            <DicePlayer player={playerTwo}/>
+            <S.DicePlayerWrapper>
+                <DicePlayer player={playerOne}/>
+            </S.DicePlayerWrapper>
+            <S.DicePlayerWrapper>
+                <DicePlayer player={playerTwo}/>
+            </S.DicePlayerWrapper>
         </S.PageWrapper>
     );
 }

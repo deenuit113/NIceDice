@@ -22,7 +22,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 6;
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth / 2, window.innerHeight /2.1);
+        renderer.setSize(window.innerWidth / 2.1, window.innerHeight / 2.1);
         container.appendChild(renderer.domElement);
         scene.background = new THREE.Color(0x99ccff);
 
