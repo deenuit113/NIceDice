@@ -26,6 +26,21 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         container.appendChild(renderer.domElement);
         scene.background = new THREE.Color(0x99ccff);
 
+        renderer.shadowMap.enabled = true;
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const topLight = new THREE.PointLight(0xffffff, 0.5);
+        topLight.position.set(0, 10, 5);
+        topLight.castShadow = true;
+        scene.add(topLight);
+
+        const topLightHelper = new THREE.PointLightHelper(topLight, 0.5, 0x0000ff);
+        scene.add(topLightHelper);
+
+        createFloor(scene);
+        
+
         const geometry = new THREE.BoxGeometry(1, 1, 1);
 
         const material = [
@@ -40,6 +55,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         const diceCount = 5;
         for (let i = 0; i < diceCount; i++) {
             const dice = new THREE.Mesh(geometry, material);
+            dice.castShadow = true;
             dice.position.x = i * 2 - (diceCount - 1);
             scene.add(dice);
             diceRefs.current.push(dice);
@@ -60,6 +76,20 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
             window.removeEventListener('resize', handleWindowResize);
         };
     }, []);
+
+    const createFloor = (scene: any) => {
+        const floor = new THREE.Mesh(
+            new THREE.PlaneGeometry(1000, 1000),
+            new THREE.ShadowMaterial({
+                opacity: 0.15,
+            })
+        );
+        floor.receiveShadow = true;
+        floor.position.y = -7;
+        floor. quaternion.setFromAxisAngle(new THREE.Vector3(-1, 0, 0), Math.PI * 0.5);
+
+        scene.add(floor);
+    }
 
     const handleWindowResize = () => {
         const camera = cameraRef.current;
