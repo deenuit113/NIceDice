@@ -4,6 +4,7 @@ export interface ScoreBoardProps {
 
 export interface ScoreBoardUIProps {
     diceValues: number[];
+    fixScore: boolean[];
     aces: number;
     deuces: number;
     threes: number;
@@ -18,10 +19,40 @@ export interface ScoreBoardUIProps {
     largeStraight: number;
     yacht: number;
     total: number;
-    onHoverAces: (diceValues: number[]) => number;
-    onHoverDeuces: (diceValues: number[]) => number;
-    onHoverThrees: (diceValues: number[]) => number;
-    onHoverFours: (diceValues: number[]) => number;
-    onHoverFives: (diceValues: number[]) => number;
-    onHoverSixes: (diceValues: number[]) => number;
+    onHoverAces: () => void;
+    onHoverDeuces: () => void;
+    onHoverThrees: () => void;
+    onHoverFours: () => void;
+    onHoverFives: () => void;
+    onHoverSixes: () => void;
+    onHoverChoice: () => void;
+    onHoverFourOfAKind: () => void;
+    onHoverFullHouse: () => void;
+    onHoverSmallStraight: () => void;
+    onHoverLargeStraight: () => void;
+    onHoverYacht: () => void;
+    onLeaveAces: () => void;
+    onLeaveDeuces: () => void;
+    onLeaveThrees: () => void;
+    onLeaveFours: () => void;
+    onLeaveFives: () => void;
+    onLeaveSixes: () => void;
+    onLeaveChoice: () => void;
+    onLeaveFourOfAKind: () => void;
+    onLeaveFullHouse: () => void;
+    onLeaveSmallStraight: () => void;
+    onLeaveLargeStraight: () => void;
+    onLeaveYacht: () => void;
+    onClickAces: () => void;
+    onClickDeuces: () => void;
+    onClickThrees: () => void;
+    onClickFours: () => void;
+    onClickFives: () => void;
+    onClickSixes: () => void;
+    onClickChoice: () => void;
+    onClickFourOfAKind: () => void;
+    onClickFullHouse: () => void;
+    onClickSmallStraight: () => void;
+    onClickLargeStraight: () => void;
+    onClickYacht: () => void;
 }

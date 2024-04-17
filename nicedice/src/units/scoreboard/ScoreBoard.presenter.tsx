@@ -14,31 +14,62 @@ export default function ScoreBoardUI (props: ScoreBoardUIProps): JSX.Element {
                     </S.ScoreBoardTitleHeader>
                     <tbody>
                     <tr>
-                        <S.ScoreTitle>Aces</S.ScoreTitle>
+                        <S.ScoreTitle 
+                            onMouseEnter={props.onHoverAces}
+                            onMouseLeave={props.onLeaveAces}
+                            onClick={props.onClickAces}
+                            isFix={props.fixScore[0]}>
+                            Aces
+                        </S.ScoreTitle>
                         <S.Score>{props.aces}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Deuces</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverDeuces}
+                            onMouseLeave={props.onLeaveDeuces}
+                            onClick={props.onClickDeuces}
+                            isFix={props.fixScore[1]}>
+                            Deuces</S.ScoreTitle>
                         <S.Score>{props.deuces}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Threes</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverThrees}
+                            onMouseLeave={props.onLeaveThrees}
+                            onClick={props.onClickThrees}
+                            isFix={props.fixScore[2]}>
+                            Threes</S.ScoreTitle>
                         <S.Score>{props.threes}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Fours</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverFours}
+                            onMouseLeave={props.onLeaveFours}
+                            onClick={props.onClickFours}
+                            isFix={props.fixScore[3]}>
+                            Fours</S.ScoreTitle>
                         <S.Score>{props.fours}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Fives</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverFives}
+                            onMouseLeave={props.onLeaveFives}
+                            onClick={props.onClickFives}
+                            isFix={props.fixScore[4]}>
+                            Fives</S.ScoreTitle>
                         <S.Score>{props.fives}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Sixes</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverSixes}
+                            onMouseLeave={props.onLeaveSixes}
+                            onClick={props.onClickSixes}
+                            isFix={props.fixScore[5]}>
+                            Sixes</S.ScoreTitle>
                         <S.Score>{props.sixes}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Subtotal</S.ScoreTitle>
+                        <S.TotalScore>Subtotal</S.TotalScore>
                         <S.Score>{props.subtotal}</S.Score>
                     </tr>
                     </tbody>
@@ -51,31 +82,61 @@ export default function ScoreBoardUI (props: ScoreBoardUIProps): JSX.Element {
                     </S.ScoreBoardTitleHeader>
                     <tbody>
                     <tr>
-                        <S.ScoreTitle>Choice</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverChoice}
+                            onMouseLeave={props.onLeaveChoice}
+                            onClick={props.onClickChoice}
+                            isFix={props.fixScore[6]}>
+                            Choice</S.ScoreTitle>
                         <S.Score>{props.choice}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>4 of a Kind</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverFourOfAKind}
+                            onMouseLeave={props.onLeaveFourOfAKind}
+                            onClick={props.onClickFourOfAKind}
+                            isFix={props.fixScore[7]}>
+                            4 of a Kind</S.ScoreTitle>
                         <S.Score>{props.fourOfAKind}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Full House</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverFullHouse}
+                            onMouseLeave={props.onLeaveFullHouse}
+                            onClick={props.onClickFullHouse}
+                            isFix={props.fixScore[8]}>
+                            Full House</S.ScoreTitle>
                         <S.Score>{props.fullHouse}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>S.Straight</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverSmallStraight}
+                            onMouseLeave={props.onLeaveSmallStraight}
+                            onClick={props.onClickSmallStraight}
+                            isFix={props.fixScore[9]}>
+                            S.Straight</S.ScoreTitle>
                         <S.Score>{props.smallStraight}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>L.Straight</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverLargeStraight}
+                            onMouseLeave={props.onLeaveLargeStraight}
+                            onClick={props.onClickLargeStraight}
+                            isFix={props.fixScore[10]}>
+                            L.Straight</S.ScoreTitle>
                         <S.Score>{props.largeStraight}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Yacht</S.ScoreTitle>
+                        <S.ScoreTitle
+                            onMouseEnter={props.onHoverYacht}
+                            onMouseLeave={props.onLeaveYacht}
+                            onClick={props.onClickYacht}
+                            isFix={props.fixScore[11]}>
+                            Yacht</S.ScoreTitle>
                         <S.Score>{props.yacht}</S.Score>
                     </tr>
                     <tr>
-                        <S.ScoreTitle>Total Score</S.ScoreTitle>
+                        <S.TotalScore>Total Score</S.TotalScore>
                         <S.Score>{props.total}</S.Score>
                     </tr>
                     </tbody>

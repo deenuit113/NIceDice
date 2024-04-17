@@ -33,16 +33,29 @@ export const ScoreBoardTitle = styled.th`
     font-weight: bolder;
 `
 
-export const ScoreTitle = styled.td`
+export const ScoreTitle = styled.td<{isFix: boolean}>`
     padding: 3px 0px 3px 0px;
     text-align: center;
     font-weight: bold;
-    border: 1px solid gray;
+    border: 2px solid gray;
+    background-color: ${(props) => props.isFix? "gray" : "white"};
+    :hover{
+        cursor: pointer;
+        background-color: orange;
+    }
 
+`
+
+export const TotalScore = styled.td`
+    padding: 3px 0px 3px 0px;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid gray;
 `
 
 export const Score = styled.td`
     width: 40px;
     text-align: center;
-    border: 1px solid gray;
+    font-weight: bolder;
+    border: 2px solid gray;
 `
