@@ -6,12 +6,18 @@ import { DicePlayerProps } from './dice.types';
 export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const [isRolling, setIsRolling] = useState<boolean>(false);
     const [diceValues, setDiceValues] = useState<number[]>([0, 0, 0, 0, 0]);
+    const [isDiceFixed, setIsDiceFixed] = useState<boolean[]>([false, false, false, false, false]);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false); //@ts-ignore
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null); //@ts-ignore
     const diceRefs = useRef<THREE.Mesh[]>([]); //@ts-ignore
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null); //@ts-ignore
     const sceneRef = useRef<THREE.Scene | null>(null);
     const wrapperName = `wrapper${props.player}`
+
+    useEffect(() => {
+        setIsDiceFixed([false, false, false, false, false]);
+        animateFloatingDice();
+    }, []);
 
     useEffect(() => {
         const container = document.createElement('div');
@@ -89,7 +95,26 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         floor. quaternion.setFromAxisAngle(new THREE.Vector3(-1, 0, 0), Math.PI * 0.5);
 
         scene.add(floor);
-    }
+    };
+
+    const animateFloatingDice = () => {    
+        for (let i = 0; i < diceRefs.current.length; i++) {
+            const dice = diceRefs.current[i];
+            const isFixed = isDiceFixed[i];
+    
+            if (!isFixed && dice) {
+                const time = performance.now() * 0.001;
+                const distance = Math.sin(time) * 0.5 + 1.5;
+    
+                dice.position.y = distance;
+            }
+        }
+        const scene = sceneRef.current;
+        const camera = cameraRef.current;
+        rendererRef.current?.render(scene, camera);
+        // 주기적으로 애니메이션을 반복
+        requestAnimationFrame(animateFloatingDice);
+    };
 
     const handleWindowResize = () => {
         const camera = cameraRef.current;
