@@ -22,6 +22,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     const [total, setTotal] = useState<number>(0);
 
     useEffect(()=>{
+        calculateSubTotal();
     },[aces,deuces,threes,fours,fives,sixes,choice,fourOfAKind,fullHouse,smallStraight,largeStraight,yacht]);
 
     useEffect(()=>{
@@ -30,7 +31,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
 
     useEffect(()=>{
         calculateTotal();
-    },[subtotal]);
+    },[subtotal, choice, fourOfAKind, fullHouse, smallStraight, largeStraight, yacht]);
 
     const countOccurrences = (diceValues: number[],value: number): number => {
         return diceValues.filter((diceValue) => diceValue === value).length;
