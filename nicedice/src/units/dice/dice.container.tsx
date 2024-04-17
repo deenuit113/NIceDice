@@ -4,9 +4,10 @@ import DiceUI from './dice.presenter';
 import { DicePlayerProps } from './dice.types';
 
 export default function DicePlayer(props: DicePlayerProps): JSX.Element {
+    const initialIsFixedArray: boolean[] = Array.from({ length: 5 }, () => false);
     const [isRolling, setIsRolling] = useState<boolean>(false);
     const [diceValues, setDiceValues] = useState<number[]>([0, 0, 0, 0, 0]);
-    const [isDiceFixed, setIsDiceFixed] = useState<boolean[]>([false, false, false, false, false]);
+    const [isDiceFixed, setIsDiceFixed] = useState<boolean[]>(initialIsFixedArray);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false); //@ts-ignore
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null); //@ts-ignore
     const diceRefs = useRef<THREE.Mesh[]>([]); //@ts-ignore
@@ -15,7 +16,12 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const wrapperName = `wrapper${props.player}`
 
     useEffect(() => {
-        setIsDiceFixed([false, false, false, false, false]);
+        //console.log(isDiceFixed);
+    }, [isDiceFixed])
+
+    useEffect(() => {
+        const nextIsFixedArray: boolean[] = Array.from({ length: 5 }, () => false);
+        setIsDiceFixed(nextIsFixedArray);
         animateFloatingDice();
     }, []);
 
@@ -73,7 +79,6 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
 
         renderer.render(scene, camera);
         rollDice();
-
         window.addEventListener('resize', handleWindowResize);
 
         return () => {
@@ -137,47 +142,49 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         const duration = 300;
     
         for (let i = 0; i < diceRefs.current.length; i++) {
-            const dice = diceRefs.current[i];
-            const scene = sceneRef.current;
-            const camera = cameraRef.current;
-            if (!dice || !scene || !camera) return;
-    
-            const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2);
-            const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2);
-            const minRotationZ = Math.floor(Math.random() * 20) * (Math.PI / 2);
-    
-            const startRotation = dice.rotation.clone();
-            const endRotation = new THREE.Euler(minRotationX, minRotationY, minRotationZ);
-    
-            const startTime = Date.now();
-    
-            const animateSingleRoll = () => {
-                const now = Date.now();
-                const delta = now - startTime;
-                const t = Math.min(delta / duration, 1);
-    
-                dice.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
-                dice.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
-                dice.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
-    
-                rendererRef.current?.render(scene, camera);
-    
-                if (t < 1) {
-                    requestAnimationFrame(animateSingleRoll);
-                } else {
-                    const newValue = showTopFace(dice, camera);
-                    newDiceValues.push(newValue);
-                    newDiceValues.shift();
-    
-                    if (i === diceRefs.current.length - 1) {
-                        setDiceValues(newDiceValues.slice());
-                        setIsRolling(false);
-                        setIsButtonDisabled(false);
+            if(!isDiceFixed[i]){
+                const dice = diceRefs.current[i];
+                const scene = sceneRef.current;
+                const camera = cameraRef.current;
+                if (!dice || !scene || !camera) return;
+        
+                const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2);
+                const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2);
+                const minRotationZ = Math.floor(Math.random() * 20) * (Math.PI / 2);
+        
+                const startRotation = dice.rotation.clone();
+                const endRotation = new THREE.Euler(minRotationX, minRotationY, minRotationZ);
+        
+                const startTime = Date.now();
+        
+                const animateSingleRoll = () => {
+                    const now = Date.now();
+                    const delta = now - startTime;
+                    const t = Math.min(delta / duration, 1);
+        
+                    dice.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
+                    dice.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
+                    dice.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
+        
+                    rendererRef.current?.render(scene, camera);
+        
+                    if (t < 1) {
+                        requestAnimationFrame(animateSingleRoll);
+                    } else {
+                        const newValue = showTopFace(dice, camera);
+                        newDiceValues.push(newValue);
+                        newDiceValues.shift();
+        
+                        if (i === diceRefs.current.length - 1) {
+                            setDiceValues(newDiceValues.slice());
+                            setIsRolling(false);
+                            setIsButtonDisabled(false);
+                        }
                     }
-                }
-            };
-    
-            animateSingleRoll();
+                };
+        
+                animateSingleRoll();
+            }
         }
     };
     //@ts-ignore
@@ -207,6 +214,14 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         return closestFace?.value || 0;
     };
 
+    const onClickFixDice = (index: number) => {
+        setIsDiceFixed(prevArray => {
+            const nextArray = [...prevArray];
+            nextArray[index] = !nextArray[index];
+            return nextArray;
+        });
+    };
+
     return (
         <>
             <DiceUI
@@ -215,6 +230,8 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
                 player = {props.player}
                 diceValues = {diceValues}
                 wrapperName = {wrapperName}
+                isDiceFixed = {isDiceFixed}
+                onClickFixDice = {onClickFixDice}
             />
         </>
     );

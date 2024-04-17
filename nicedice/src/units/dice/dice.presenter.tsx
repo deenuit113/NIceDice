@@ -10,9 +10,17 @@ export default function DiceUI(props: DiceUIProps) {
                 <S.PlayerWrapper>
                     <S.RollButton onClick={props.rollDice} disabled={props.isButtonDisabled}>{props.player} Roll Dice</S.RollButton>
                     <S.DiceValueWrapper>
-                        {props.diceValues.map((value, index) => (
-                            <S.DiceValue key={index} diceValue={value}>{value}</S.DiceValue>
-                        ))}
+                        {props.diceValues.map((value, index) => {
+                            return (
+                                <S.DiceValue 
+                                    key={index} 
+                                    diceValue={value} 
+                                    isFixed={props.isDiceFixed[index]}
+                                    onClick={()=>props.onClickFixDice(index)}>
+                                    {value}
+                                </S.DiceValue>
+                            );
+                        })}
                     </S.DiceValueWrapper>
                     <S.PlayerBoardWrapper>
                         <ScoreBoard

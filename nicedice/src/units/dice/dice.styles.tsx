@@ -44,11 +44,16 @@ export const DiceValueWrapper = styled.div`
     justify-content: space-evenly;
     margin-top: 10px;
     border-radius: 10px;
+    z-index: 1000;
 `
 
-export const DiceValue = styled.div<{diceValue: number}>`
+export const DiceValue = styled.div<{diceValue: number, isFixed: boolean}>`
     font-size: 23px;
     font-weight: bolder;
+    padding: 0px 10px 0px 10px;
+    border: ${props => props.isFixed ? "4px solid #EB0000;": "none"};
+    border-radius: 20px;
+    cursor: pointer;
     color: ${props => {
         switch (props.diceValue) {
             case 1:
@@ -64,7 +69,7 @@ export const DiceValue = styled.div<{diceValue: number}>`
             case 6:
                 return 'yellow';
             default:
-                return 'black'; // 기본 값은 검은색으로 설정합니다.
+                return 'black';
         }
     }};
 `
