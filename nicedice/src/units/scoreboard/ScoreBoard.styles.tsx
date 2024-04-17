@@ -40,8 +40,8 @@ export const ScoreTitle = styled.td<{isFix: boolean}>`
     border: 2px solid gray;
     background-color: ${(props) => props.isFix? "gray" : "white"};
     :hover{
-        cursor: pointer;
-        background-color: orange;
+        cursor: ${(props) => props.isFix? "not-allowed" : "pointer"};
+        background-color: ${(props) => props.isFix? "gray" : "orange"};
     }
 
 `
