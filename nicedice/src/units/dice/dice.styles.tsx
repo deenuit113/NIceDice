@@ -25,8 +25,8 @@ export const PlayerWrapper = styled.div`
 
 export const RollButton = styled.button`
     width: 80%;
-    font-size: 18px;
-    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    padding: 8px 16px 8px 16px;
     border-radius: 20px;
     :hover{
         cursor: pointer;
@@ -38,7 +38,7 @@ export const DiceValueWrapper = styled.div`
     width: 80%;
     display: flex;
     flex-direction: row;
-    border: 1px solid blue;
+    border: 2px solid black;
     text-align: center;
     align-items: center;
     justify-content: space-evenly;
@@ -47,7 +47,7 @@ export const DiceValueWrapper = styled.div`
 `
 
 export const DiceValue = styled.div<{diceValue: number}>`
-    font-size: 25px;
+    font-size: 23px;
     font-weight: bolder;
     color: ${props => {
         switch (props.diceValue) {
@@ -72,54 +72,7 @@ export const DiceValue = styled.div<{diceValue: number}>`
 export const PlayerBoardWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 95%;
     height: 70%;
-    margin-top: 10px;
-    border: 1px solid blue;
-`
-
-export const PlayerBoard = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-`
-
-export const BasicScoreBoard = styled.table`
-    width: 50%;
-    height: 90%;
-    border: 1px solid black;
-    margin: 10px 10px 10px 10px;
-    padding: 10px;
-`
-
-export const SpecialScoreBoard = styled.table`
-    width: 50%;
-    height: 90%;
-    border: 1px solid black;
-    margin: 10px 10px 10px 10px;
-    padding: 10px;
-`
-
-export const ScoreBoardTitleHeader = styled.thead`
-    border: 1px solid black;
-    text-align: center;
-`
-
-export const ScoreBoardTitle = styled.th`
-    font-size: 14px;
-    font-weight: bolder;
-`
-
-export const ScoreTitle = styled.td`
-    padding: 3px 0px 3px 0px;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid gray;
-
-`
-
-export const Score = styled.td`
-    text-align: center;
-    border: 1px solid gray;
+    margin-top: 5px;
 `

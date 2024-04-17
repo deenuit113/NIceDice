@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const PlayerBoard = styled.div`
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -9,27 +10,25 @@ export const PlayerBoard = styled.div`
 
 export const BasicScoreBoard = styled.table`
     width: 50%;
-    height: 90%;
-    border: 1px solid black;
-    margin: 10px 10px 10px 10px;
+    height: 100%;
+    margin: 0px;
     padding: 10px;
 `
 
 export const SpecialScoreBoard = styled.table`
     width: 50%;
-    height: 90%;
-    border: 1px solid black;
-    margin: 10px 10px 10px 10px;
+    height: 100%;
+    margin: 0px;
     padding: 10px;
 `
 
 export const ScoreBoardTitleHeader = styled.thead`
-    border: 1px solid black;
+    justify-content: center;
     text-align: center;
 `
 
 export const ScoreBoardTitle = styled.th`
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bolder;
 `
 
