@@ -1,4 +1,4 @@
-import MainPage from "@/commons/Mainpage";
+import MainPage from "@/units/main/Mainpage";
 
 export default function Home(): JSX.Element {
   return (
