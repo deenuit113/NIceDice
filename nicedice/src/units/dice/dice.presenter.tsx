@@ -12,7 +12,7 @@ export default function DiceUI(props: DiceUIProps) {
         <>
             <S.Wrapper id = {props.wrapperName}>
                 <S.PlayerWrapper>
-                    <S.RollButton onClick={props.rollDice} disabled={props.isButtonDisabled}>
+                    <S.RollButton onClick={props.rollDice} disabled={!props.isMyTurn || props.isButtonDisabled}>
                         {props.player === '1p' ? (
                             <span>
                                 <span>{props.player} Roll Dice </span>

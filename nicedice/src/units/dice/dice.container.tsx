@@ -26,15 +26,18 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     useEffect(() => {
         if(isMyTurn === true){
             setIsButtonDisabled(false);
-            console.log("button d")
-        } else setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(true);
+        }
     }, [isMyTurn, turn]);
 
     useEffect(() => {
-        if(turn === props.player){
+        if(turn === props.player && !isMyTurn){
             setIsMyTurn(true)
+        } else if (turn !== props.player && isMyTurn) {
+            setIsMyTurn(false);
         }
-    }, [turn]);
+    }, [turn, isMyTurn]);
 
     useEffect(() => {
         //console.log(isDiceFixed);
@@ -260,6 +263,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
                 wrapperName = {wrapperName}
                 isDiceFixed = {isDiceFixed}
                 onClickFixDice = {onClickFixDice}
+                isMyTurn = {isMyTurn}
             />
         </>
     );

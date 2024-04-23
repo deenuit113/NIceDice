@@ -10,4 +10,5 @@ export interface DiceUIProps {
     player: string;
     isDiceFixed: boolean[];
     onClickFixDice: (index: number) => void;
+    isMyTurn: boolean;
 }
