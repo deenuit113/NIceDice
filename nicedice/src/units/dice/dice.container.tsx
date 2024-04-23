@@ -4,7 +4,6 @@ import DiceUI from './dice.presenter';
 import { DicePlayerProps } from './dice.types';
 import { useRecoilState } from 'recoil';
 import { turnState, turnCount1p, turnCount2p } from '@/commons/state/atoms';
-import { sendStatusCode } from 'next/dist/server/api-utils';
 
 export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const initialIsFixedArray: boolean[] = Array.from({ length: 5 }, () => false);
@@ -158,6 +157,8 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
 
     const rollDice = () => {
         if (isRolling || isButtonDisabled) return;
+        if (turn === "1p" && leftTurn1p === 0) return;
+        if (turn === "2p" && leftTurn2p === 0) return;
         setIsRolling(true);
         setIsButtonDisabled(true);
     

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import ScoreBoardUI from "./ScoreBoard.presenter";
 import { ScoreBoardProps } from "./ScoreBoard.types";
 import { DiceValue } from "../dice/dice.styles";
+import { useRecoilState } from "recoil";
+import { selectScore1p, selectScore2p, turnState } from "@/commons/state/atoms";
 
 export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     const initialArray: boolean[] = Array.from({ length: 12 }, () => false);
@@ -20,6 +22,10 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     const [largeStraight, setLargeStraight] = useState<number>(0);
     const [yacht, setYacht] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
+
+    const [select1p, isSelectScore1p] = useRecoilState(selectScore1p);
+    const [select2p, isSelectScore2p] = useRecoilState(selectScore2p);
+    const [turn, setTurn] = useRecoilState(turnState);
 
     useEffect(()=>{
         calculateSubTotal();
@@ -55,7 +61,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[0] = true;
             return nextArray;
         });
-
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverDeuces = () => {
@@ -76,7 +87,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[1] = true;
             return nextArray;
         });
-
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverThrees = () => {
@@ -97,6 +113,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[2] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverFours = () => {
@@ -117,6 +139,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[3] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverFives = () => {
@@ -137,6 +165,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[4] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverSixes = () => {
@@ -157,6 +191,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[5] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const calculateSubTotal = (): void => {
@@ -188,6 +228,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[6] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
         
 
@@ -211,6 +257,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[7] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
 
@@ -236,6 +288,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[8] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverSmallStraight = () => {
@@ -262,6 +320,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[9] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverLargeStraight = () => {
@@ -290,6 +354,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[10] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const onHoverYacht = () => {
@@ -310,6 +380,12 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
             nextArray[11] = true;
             return nextArray;
         });
+        if(turn === "1p"){
+            isSelectScore1p(true);
+        }
+        else if(turn === "2p"){
+            isSelectScore2p(true);
+        }
     };
 
     const calculateTotal = () => {

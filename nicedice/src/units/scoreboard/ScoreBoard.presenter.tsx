@@ -2,7 +2,6 @@ import * as S from "./ScoreBoard.styles";
 import { ScoreBoardUIProps } from "./ScoreBoard.types";
 
 export default function ScoreBoardUI (props: ScoreBoardUIProps): JSX.Element {
-
     return (
         <>
             <S.PlayerBoard>

@@ -15,6 +15,16 @@ export const turnCount2p = atom({
     default: 2,
 });
 
+export const selectScore1p = atom({
+    key: 'selectScore1p',
+    default: false,
+});
+
+export const selectScore2p = atom({
+    key: 'selectScore2p',
+    default: false,
+});
+
 export const winState = atom({
     key: 'winState',
     default: "0p",
