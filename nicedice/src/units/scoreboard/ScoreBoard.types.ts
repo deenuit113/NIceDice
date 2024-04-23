@@ -1,9 +1,12 @@
 export interface ScoreBoardProps {
     diceValues: number[];
+    isMyTurn: boolean;
+    player: string;
 }
 
 export interface ScoreBoardUIProps {
     diceValues: number[];
+    isMyTurn: boolean;
     fixScore: boolean[];
     aces: number;
     deuces: number;

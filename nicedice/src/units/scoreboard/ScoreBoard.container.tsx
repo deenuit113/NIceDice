@@ -44,7 +44,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverAces = () => {
-        if(fixScore[0]) return;
+        if(fixScore[0] || turn !== props.player) return;
         setAces(countOccurrences(props.diceValues, 1) * 1);
     };
 
@@ -54,7 +54,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickAces = () => {
-        if(fixScore[0]) return;
+        if(fixScore[0] || turn !== props.player) return;
         setAces(countOccurrences(props.diceValues, 1) * 1);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -70,7 +70,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverDeuces = () => {
-        if(fixScore[1]) return;
+        if(fixScore[1] || turn !== props.player) return;
         setDeuces(countOccurrences(props.diceValues, 2) * 2);
     };
 
@@ -80,7 +80,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickDeuces = () => {
-        if(fixScore[1]) return;
+        if(fixScore[1] || turn !== props.player) return;
         setDeuces(countOccurrences(props.diceValues, 2) * 2);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -96,7 +96,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverThrees = () => {
-        if(fixScore[2]) return;
+        if(fixScore[2] || turn !== props.player) return;
         setThrees(countOccurrences(props.diceValues, 3) * 3);
     };
 
@@ -106,7 +106,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickThrees = () => {
-        if(fixScore[2]) return;
+        if(fixScore[2] || turn !== props.player) return;
         setThrees(countOccurrences(props.diceValues, 3) * 3);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -122,7 +122,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverFours = () => {
-        if(fixScore[3]) return;
+        if(fixScore[3] || turn !== props.player) return;
         setFours(countOccurrences(props.diceValues, 4) * 4);
     };
 
@@ -132,7 +132,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickFours = () => {
-        if(fixScore[3]) return;
+        if(fixScore[3] || turn !== props.player) return;
         setFours(countOccurrences(props.diceValues, 4) * 4);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -148,7 +148,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverFives = () => {
-        if(fixScore[4]) return;
+        if(fixScore[4] || turn !== props.player) return;
         setFives(countOccurrences(props.diceValues, 5) * 5);
     };
 
@@ -158,7 +158,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     }
 
     const onClickFives = () => {
-        if(fixScore[4]) return;
+        if(fixScore[4] || turn !== props.player) return;
         setFives(countOccurrences(props.diceValues, 5) * 5);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -174,7 +174,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverSixes = () => {
-        if(fixScore[5]) return;
+        if(fixScore[5] || turn !== props.player) return;
         return setSixes(countOccurrences(props.diceValues, 6) * 6);
     };
 
@@ -184,7 +184,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     }
 
     const onClickSixes = () => {
-        if(fixScore[5]) return;
+        if(fixScore[5] || turn !== props.player) return;
         setSixes(countOccurrences(props.diceValues, 6) * 6);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -205,7 +205,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverChoice = () => {
-        if(fixScore[6]) return;
+        if(fixScore[6] || turn !== props.player) return;
         const sum = props.diceValues.reduce((accumulator, currentValue) => {
             return accumulator + currentValue
           }, 0);
@@ -218,7 +218,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickChoice = () => {
-        if(fixScore[6]) return;
+        if(fixScore[6] || turn !== props.player) return;
         const sum = props.diceValues.reduce((accumulator, currentValue) => {
             return accumulator + currentValue
           }, 0);
@@ -238,7 +238,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
         
 
     const onHoverFourOfAKind = () => {
-        if(fixScore[7]) return;
+        if(fixScore[7] || turn !== props.player) return;
         setFourOfAKind(props.diceValues.some((value) => countOccurrences(props.diceValues,value) >= 4)
             ? props.diceValues.reduce((acc, cur) => acc + cur, 0) : 0);
     };
@@ -249,7 +249,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickFourOfAKind = () => {
-        if(fixScore[7]) return;
+        if(fixScore[7] || turn !== props.player) return;
         setFourOfAKind(props.diceValues.some((value) => countOccurrences(props.diceValues,value) >= 4)
             ? props.diceValues.reduce((acc, cur) => acc + cur, 0) : 0);
         setFixScore(prevArray => {
@@ -267,7 +267,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
 
 
     const onHoverFullHouse = () => {
-        if(fixScore[8]) return;
+        if(fixScore[8] || turn !== props.player) return;
         setFullHouse((props.diceValues.some((value) => countOccurrences(props.diceValues, value) === 3) &&
             props.diceValues.some((value) => countOccurrences(props.diceValues, value) === 2))
             ? 25 : 0);
@@ -279,7 +279,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickFullHouse = () => {
-        if(fixScore[8]) return;
+        if(fixScore[8] || turn !== props.player) return;
         setFullHouse((props.diceValues.some((value) => countOccurrences(props.diceValues, value) === 3) &&
             props.diceValues.some((value) => countOccurrences(props.diceValues, value) === 2))
             ? 25 : 0);
@@ -297,7 +297,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverSmallStraight = () => {
-        if(fixScore[9]) return;
+        if(fixScore[9] || turn !== props.player) return;
         setSmallStraight((props.diceValues.includes(1) && props.diceValues.includes(2) && props.diceValues.includes(3) && props.diceValues.includes(4)) ||
             (props.diceValues.includes(2) && props.diceValues.includes(3) && props.diceValues.includes(4) && props.diceValues.includes(5)) ||
             (props.diceValues.includes(3) && props.diceValues.includes(4) && props.diceValues.includes(5) && props.diceValues.includes(6))
@@ -310,7 +310,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickSmallStraight = () => {
-        if(fixScore[9]) return;
+        if(fixScore[9] || turn !== props.player) return;
         setSmallStraight((props.diceValues.includes(1) && props.diceValues.includes(2) && props.diceValues.includes(3) && props.diceValues.includes(4)) ||
             (props.diceValues.includes(2) && props.diceValues.includes(3) && props.diceValues.includes(4) && props.diceValues.includes(5)) ||
             (props.diceValues.includes(3) && props.diceValues.includes(4) && props.diceValues.includes(5) && props.diceValues.includes(6))
@@ -329,7 +329,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverLargeStraight = () => {
-        if(fixScore[10]) return;
+        if(fixScore[10] || turn !== props.player) return;
         setLargeStraight((props.diceValues.includes(1) && props.diceValues.includes(2) && props.diceValues.includes(3) &&
             props.diceValues.includes(4) && props.diceValues.includes(5)) ||
             (props.diceValues.includes(2) && props.diceValues.includes(3) && props.diceValues.includes(4) &&
@@ -343,7 +343,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickLargeStraight = () => {
-        if(fixScore[10]) return;
+        if(fixScore[10] || turn !== props.player) return;
         setLargeStraight((props.diceValues.includes(1) && props.diceValues.includes(2) && props.diceValues.includes(3) &&
             props.diceValues.includes(4) && props.diceValues.includes(5)) ||
             (props.diceValues.includes(2) && props.diceValues.includes(3) && props.diceValues.includes(4) &&
@@ -363,7 +363,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onHoverYacht = () => {
-        if(fixScore[11]) return;
+        if(fixScore[11] || turn !== props.player) return;
         setYacht(props.diceValues.every((value) => value === props.diceValues[0]) ? 50 : 0);
     };
 
@@ -373,7 +373,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const onClickYacht = () => {
-        if(fixScore[11]) return;
+        if(fixScore[11] || turn !== props.player) return;
         setYacht(props.diceValues.every((value) => value === props.diceValues[0]) ? 50 : 0);
         setFixScore(prevArray => {
             const nextArray = [...prevArray];
@@ -396,6 +396,7 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
         <>
             <ScoreBoardUI
                 diceValues={props.diceValues}
+                isMyTurn={props.isMyTurn}
                 fixScore={fixScore}
                 aces = {aces}
                 deuces = {deuces}

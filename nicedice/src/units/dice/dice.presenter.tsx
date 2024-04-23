@@ -41,6 +41,8 @@ export default function DiceUI(props: DiceUIProps) {
                     <S.PlayerBoardWrapper>
                         <ScoreBoard
                             diceValues = {props.diceValues}
+                            isMyTurn = {props.isMyTurn}
+                            player = {props.player}
                         />
                     </S.PlayerBoardWrapper>
                 </S.PlayerWrapper>

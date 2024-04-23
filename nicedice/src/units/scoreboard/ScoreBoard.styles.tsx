@@ -32,18 +32,19 @@ export const ScoreBoardTitle = styled.th`
     font-weight: bolder;
 `
 
-export const ScoreTitle = styled.td<{isFix: boolean}>`
-    padding: 3px 0px 3px 0px;
+export const ScoreTitle = styled.td<{ isFix: boolean; isAvailable: boolean }>`
+    padding: 3px 0px;
     text-align: center;
     font-weight: bold;
     border: 2px solid gray;
-    background-color: ${(props) => props.isFix? "gray" : "white"};
-    :hover{
-        cursor: ${(props) => props.isFix? "not-allowed" : "pointer"};
-        background-color: ${(props) => props.isFix? "gray" : "orange"};
-    }
+    background-color: ${(props) => (props.isFix ? "gray" : "white")};
 
-`
+    /* hover일 때 cursor 속성 변경 */
+    :hover {
+        cursor: ${(props) => (props.isAvailable && !props.isFix ? "pointer" : "not-allowed")};
+        background-color: ${(props) => (props.isFix ? "gray" : "white")}; /* 백그라운드 색상은 원래대로 유지 */
+    }
+`;
 
 export const TotalScore = styled.td`
     padding: 3px 0px 3px 0px;
