@@ -33,6 +33,12 @@ export const RollButton = styled.button`
     }
 `
 
+export const LeftTurn = styled.span`
+    font-size: 18px;
+    color: red;
+    font-weight: bolder;
+`
+
 export const DiceValueWrapper = styled.div`
     background-color: #77ccff;
     width: 80%;

@@ -5,9 +5,14 @@ export const turnState = atom({
     default: "0p",
 });
 
-export const turnCount = atom({
-    key: 'turnCount',
-    default: 3,
+export const turnCount1p = atom({
+    key: 'turnCount1p',
+    default: 2,
+});
+
+export const turnCount2p = atom({
+    key: 'turnCount2p',
+    default: 2,
 });
 
 export const winState = atom({

@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import DiceUI from './dice.presenter';
 import { DicePlayerProps } from './dice.types';
+import { useRecoilState } from 'recoil';
+import { turnState, turnCount1p, turnCount2p } from '@/commons/state/atoms';
+import { sendStatusCode } from 'next/dist/server/api-utils';
 
 export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const initialIsFixedArray: boolean[] = Array.from({ length: 5 }, () => false);
@@ -14,6 +17,24 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null); //@ts-ignore
     const sceneRef = useRef<THREE.Scene | null>(null);
     const wrapperName = `wrapper${props.player}`
+    const [isMyTurn, setIsMyTurn] = useState<boolean>(false);
+
+    const [turn, setTurn] = useRecoilState(turnState);
+    const [leftTurn1p, setLeftTurn1p] = useRecoilState(turnCount1p);
+    const [leftTurn2p, setLeftTurn2p] = useRecoilState(turnCount2p);
+
+    useEffect(() => {
+        if(isMyTurn === true){
+            setIsButtonDisabled(false);
+            console.log("button d")
+        } else setIsButtonDisabled(true);
+    }, [isMyTurn, turn]);
+
+    useEffect(() => {
+        if(turn === props.player){
+            setIsMyTurn(true)
+        }
+    }, [turn]);
 
     useEffect(() => {
         //console.log(isDiceFixed);
@@ -186,6 +207,13 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
                 animateSingleRoll();
             }
         }
+        if (props.player === "1p") {
+            setLeftTurn1p((prevCount1p) => prevCount1p - 1);
+        } else if (props.player === "2p") {
+            setLeftTurn2p((prevCount2p) => prevCount2p - 1);
+        }
+
+        console.log(1);
     };
     //@ts-ignore
     const showTopFace = (dice: THREE.Mesh, camera: THREE.PerspectiveCamera) => {
