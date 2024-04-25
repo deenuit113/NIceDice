@@ -39,13 +39,9 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
         if(props.player === "2p"){
             if (!fixScore.includes(false)) {
                 setIsEnd(true);
-                console.log(fixScore);
-                console.log(isEnd);
             }
             else {
                 setIsEnd(false);
-                console.log(fixScore);
-                console.log(isEnd);
             }
         }
     },[fixScore]);

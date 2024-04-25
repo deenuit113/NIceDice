@@ -12,7 +12,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const [isDiceFixed, setIsDiceFixed] = useState<boolean[]>(initialIsFixedArray);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false); //@ts-ignore
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null); //@ts-ignore
-    const diceRefs = useRef<THREE.Mesh[]>([]); //@ts-ignore
+    const diceRefs = useRef<THREE.Mesh[]>(Array.from({ length: 5 }, () => null)); //@ts-ignore
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null); //@ts-ignore
     const sceneRef = useRef<THREE.Scene | null>(null);
     const wrapperName = `wrapper${props.player}`
@@ -56,7 +56,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 6;
+        camera.position.z = 9;
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth / 2.1, window.innerHeight / 2.1);
         container.appendChild(renderer.domElement);
@@ -94,6 +94,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
             dice.castShadow = true;
             dice.position.x = i * 2 - (diceCount - 1);
             scene.add(dice);
+            diceRefs.current.shift();
             diceRefs.current.push(dice);
         }
 
@@ -157,69 +158,79 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     };
 
     const rollDice = () => {
-        if (isRolling || isButtonDisabled) return;
-        if (turn === "1p" && leftTurn1p === 0) return;
-        if (turn === "2p" && leftTurn2p === 0) return;
+        if (isRolling || isButtonDisabled) {
+            console.log("1 reason");
+            return;
+        }
+        if (turn === "1p" && leftTurn1p === 0) {
+            console.log("2 reason");
+            return;
+        }
+        if (turn === "2p" && leftTurn2p === 0) {
+            console.log("3 reason");
+            return;
+        }
         setIsRolling(true);
         setIsButtonDisabled(true);
     
-        const newDiceValues: number[] = [0, 0, 0, 0, 0];
+        const newDiceValues: number[] = [...diceValues];
+        const nextIsFixedArray: boolean[] = [...isDiceFixed];
     
         const duration = 300;
-    
         for (let i = 0; i < diceRefs.current.length; i++) {
-            if(!isDiceFixed[i]){
+            if (!isDiceFixed[i]) {
                 const dice = diceRefs.current[i];
                 const scene = sceneRef.current;
                 const camera = cameraRef.current;
                 if (!dice || !scene || !camera) return;
-
-                setIsDiceFixed(Array.from({ length: 5 }, () => false));
-        
+    
                 const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2);
                 const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2);
                 const minRotationZ = Math.floor(Math.random() * 20) * (Math.PI / 2);
-        
+    
                 const startRotation = dice.rotation.clone();
                 const endRotation = new THREE.Euler(minRotationX, minRotationY, minRotationZ);
-        
+    
                 const startTime = Date.now();
-        
+    
                 const animateSingleRoll = () => {
                     const now = Date.now();
                     const delta = now - startTime;
                     const t = Math.min(delta / duration, 1);
-        
+    
                     dice.rotation.x = THREE.MathUtils.lerp(startRotation.x, endRotation.x, t);
                     dice.rotation.y = THREE.MathUtils.lerp(startRotation.y, endRotation.y, t);
                     dice.rotation.z = THREE.MathUtils.lerp(startRotation.z, endRotation.z, t);
-        
+    
                     rendererRef.current?.render(scene, camera);
-        
+    
                     if (t < 1) {
                         requestAnimationFrame(animateSingleRoll);
                     } else {
                         const newValue = showTopFace(dice, camera);
-                        newDiceValues.push(newValue);
-                        newDiceValues.shift();
-        
+                        newDiceValues[i] = newValue !== undefined ? newValue : 0; // 고정하지 않은 주사위는 0으로 설정
+                        
+                        setDiceValues([...newDiceValues]);
+
                         if (i === diceRefs.current.length - 1) {
                             setDiceValues(newDiceValues.slice());
-                            setIsRolling(false);
-                            setIsButtonDisabled(false);
                         }
                     }
                 };
-        
+    
                 animateSingleRoll();
             }
         }
+
+        setIsRolling(false);
+        setIsButtonDisabled(false);
+        setIsDiceFixed(Array.from({ length: 5 }, () => false));
         if (props.player === "1p") {
             setLeftTurn1p((prevCount1p) => prevCount1p - 1);
         } else if (props.player === "2p") {
             setLeftTurn2p((prevCount2p) => prevCount2p - 1);
         }
-
+    
         console.log(1);
     };
     //@ts-ignore
@@ -250,6 +261,10 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     };
 
     const onClickFixDice = (index: number) => {
+        // 플레이어가 1p이고 턴이 남아있지 않을 때 함수 종료
+        if (props.player === "1p" && leftTurn1p === 0) return;
+        if (props.player === "2p" && leftTurn2p === 0) return;
+    
         setIsDiceFixed(prevArray => {
             const nextArray = [...prevArray];
             nextArray[index] = !nextArray[index];

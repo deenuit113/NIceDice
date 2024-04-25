@@ -58,8 +58,6 @@ export default function MainPage(): JSX.Element{
         }
     }, [leftTurn1p, leftTurn2p, turn, select1p, select2p]);
 
-    console.log(turn);
-
     return(
         <S.PageWrapper>
             <S.DicePlayerWrapper>
