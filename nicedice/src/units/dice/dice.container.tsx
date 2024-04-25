@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import DiceUI from './dice.presenter';
 import { DicePlayerProps } from './dice.types';
 import { useRecoilState } from 'recoil';
-import { turnState, turnCount1p, turnCount2p } from '@/commons/state/atoms';
+import { turnState, turnCount1p, turnCount2p, selectScore1p, selectScore2p } from '@/commons/state/atoms';
 
 export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const initialIsFixedArray: boolean[] = Array.from({ length: 5 }, () => false);
@@ -23,6 +23,7 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const [leftTurn2p, setLeftTurn2p] = useRecoilState(turnCount2p);
 
     useEffect(() => {
+        rollDice();
         if(isMyTurn === true){
             setIsButtonDisabled(false);
         } else {
