@@ -174,7 +174,6 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
         setIsButtonDisabled(true);
     
         const newDiceValues: number[] = [...diceValues];
-        const nextIsFixedArray: boolean[] = [...isDiceFixed];
     
         const duration = 300;
         for (let i = 0; i < diceRefs.current.length; i++) {
