@@ -42,7 +42,7 @@ export const ScoreTitle = styled.td<{ isFix: boolean; isAvailable: boolean }>`
     /* hover일 때 cursor 속성 변경 */
     :hover {
         cursor: ${(props) => (props.isAvailable && !props.isFix ? "pointer" : "not-allowed")};
-        background-color: ${(props) => (props.isFix ? "gray" : "white")}; /* 백그라운드 색상은 원래대로 유지 */
+        background-color: ${(props) => (props.isAvailable && !props.isFix ? "orange" : "white")};
     }
 `;
 
