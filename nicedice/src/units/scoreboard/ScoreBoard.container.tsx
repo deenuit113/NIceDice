@@ -3,7 +3,7 @@ import ScoreBoardUI from "./ScoreBoard.presenter";
 import { ScoreBoardProps } from "./ScoreBoard.types";
 import { DiceValue } from "../dice/dice.styles";
 import { useRecoilState } from "recoil";
-import { selectScore1p, selectScore2p, turnState } from "@/commons/state/atoms";
+import { selectScore1p, selectScore2p, totalScore1p, totalScore2p, turnState, isGameEnd } from "@/commons/state/atoms";
 
 export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     const initialArray: boolean[] = Array.from({ length: 12 }, () => false);
@@ -26,6 +26,9 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     const [select1p, isSelectScore1p] = useRecoilState(selectScore1p);
     const [select2p, isSelectScore2p] = useRecoilState(selectScore2p);
     const [turn, setTurn] = useRecoilState(turnState);
+    const [total1p, setTotal1p] = useRecoilState(totalScore1p);
+    const [total2p, setTotal2p] = useRecoilState(totalScore2p);
+    const [isEnd, setIsEnd] = useRecoilState<boolean>(isGameEnd);
 
     useEffect(()=>{
         calculateSubTotal();
@@ -33,6 +36,18 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
 
     useEffect(()=>{
         calculateSubTotal();
+        if(props.player === "2p"){
+            if (!fixScore.includes(false)) {
+                setIsEnd(true);
+                console.log(fixScore);
+                console.log(isEnd);
+            }
+            else {
+                setIsEnd(false);
+                console.log(fixScore);
+                console.log(isEnd);
+            }
+        }
     },[fixScore]);
 
     useEffect(()=>{
@@ -389,7 +404,14 @@ export default function ScoreBoard (props: ScoreBoardProps): JSX.Element {
     };
 
     const calculateTotal = () => {
-        return setTotal(subtotal + choice + fourOfAKind + fullHouse + smallStraight + largeStraight + yacht);
+        const total = subtotal + choice + fourOfAKind + fullHouse + smallStraight + largeStraight + yacht;
+        if(props.player === "1p"){
+            setTotal1p(total);
+        }
+        else if (props.player === "2p"){
+            setTotal2p(total);
+        }
+        return setTotal(total);
     };
 
     return (

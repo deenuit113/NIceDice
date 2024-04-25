@@ -25,6 +25,21 @@ export const selectScore2p = atom({
     default: false,
 });
 
+export const totalScore1p = atom({
+    key: 'totalScore1p',
+    default: 0,
+});
+
+export const totalScore2p = atom({
+    key: 'totalScore2p',
+    default: 0,
+});
+
+export const isGameEnd = atom({
+    key: 'isGameEnd',
+    default: false,
+});
+
 export const winState = atom({
     key: 'winState',
     default: "0p",
