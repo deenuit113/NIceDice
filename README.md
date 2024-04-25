@@ -2,7 +2,7 @@
 > Yatzy Dice 웹게임 - ThreeJs 토이프로젝트
 ---
 ## 기획의도
-> ThreeJS 숙련도 키우기 위한 토이프로젝트 & 간단한 웹 게임 제작
+> ThreeJS 이해도 높이기 위한 토이프로젝트 & 간단한 웹 게임 제작
 ---
 ## 주요 사용 기술
 > NextJs, TypeScript, ThreeJS, Recoil
