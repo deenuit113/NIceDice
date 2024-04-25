@@ -23,13 +23,13 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
     const [leftTurn2p, setLeftTurn2p] = useRecoilState(turnCount2p);
 
     useEffect(() => {
-        rollDice();
         if(isMyTurn === true){
             setIsButtonDisabled(false);
+            rollDice();
         } else {
             setIsButtonDisabled(true);
         }
-    }, [isMyTurn, turn]);
+    }, [turn ,isMyTurn]);
 
     useEffect(() => {
         if(turn === props.player && !isMyTurn){
@@ -173,6 +173,8 @@ export default function DicePlayer(props: DicePlayerProps): JSX.Element {
                 const scene = sceneRef.current;
                 const camera = cameraRef.current;
                 if (!dice || !scene || !camera) return;
+
+                setIsDiceFixed(Array.from({ length: 5 }, () => false));
         
                 const minRotationX = Math.floor(Math.random() * 20) * (Math.PI / 2);
                 const minRotationY = Math.floor(Math.random() * 20) * (Math.PI / 2);

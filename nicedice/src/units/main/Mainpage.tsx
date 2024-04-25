@@ -39,8 +39,8 @@ export default function MainPage(): JSX.Element{
     },[isEnd]);
 
     useEffect(()=> {
-        setLeftTurn1p(3);
-        setLeftTurn2p(3);
+        setLeftTurn1p(2);
+        setLeftTurn2p(2);
         setTurn(playerOne)
     },[])
 
@@ -48,13 +48,11 @@ export default function MainPage(): JSX.Element{
         if (leftTurn1p === -1 || select1p === true) {
             setTurn(playerTwo);
             setLeftTurn1p(3);
-            setLeftTurn2p(3);
             isSelectScore1p(false);
             console.log("turn 2")
         } else if (leftTurn2p === -1 || select2p === true){
             setTurn(playerOne);
             setLeftTurn2p(3);
-            setLeftTurn1p(3);
             isSelectScore2p(false);
             console.log("turn 1")
         }
