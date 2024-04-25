@@ -22,15 +22,18 @@ export default function MainPage(): JSX.Element{
         if(isEnd === true){
             if(total1p > total2p) {
                 setWin(playerOne);
-                alert("1p win!")
+                alert("1p win!");
+                window.location.reload();
             } 
             else if(total1p < total2p) {
                 setWin(playerTwo);
-                alert("2p win!")
+                alert("2p win!");
+                window.location.reload();
             }
             else if(total1p === total2p) {
                 setWin("draw");
-                alert("draw")
+                alert("draw");
+                window.location.reload();
             }
         };
     },[isEnd]);
